@@ -1,88 +1,112 @@
+🔔 Sistema de Alarme com ESP32, Web Interface e Notificações via Telegram
+Este projeto implementa um sistema de alarme residencial usando o ESP32, sensores de movimento e magnético, um buzzer, e uma interface web acessível via navegador. Ele também envia alertas em tempo real para o Telegram sempre que um evento for detectado.
 
-# 🔔 Monitor de Movimento com ESP32 + Interface Web
+📦 Recursos
+📡 Conexão Wi-Fi para acesso remoto
 
-Este projeto utiliza um **ESP32**, um **sensor infravermelho TCRT5000** e um **buzzer** para detectar movimento, ativar um alarme sonoro e exibir os eventos registrados em uma página web acessível via Wi-Fi.
+🌐 Interface web com:
 
----
+Estado do sistema
 
-## 🚀 Funcionalidades
+Botões para ligar/desligar o alarme
 
-- Conexão à rede Wi-Fi configurada no código
-- Detecção de movimento via sensor infravermelho
-- Ativação de alarme sonoro com buzzer
-- Interface web com:
-  - Status do alarme (ativado/desativado)
-  - Log dos últimos 20 eventos de movimento
-  - Botão para silenciar o alarme
+Habilitar/desabilitar o sensor MC-38 (janela/porta)
 
----
+Visualização do log de eventos em tempo real
 
-## 🔧 Componentes Utilizados
+🛎️ Buzzer que soa ao detectar invasão
 
-- ESP32
-- Sensor infravermelho TCRT5000 (ou similar)
-- Buzzer passivo
-- Conexão Wi-Fi
+📲 Notificações via Telegram ao detectar:
 
----
+Movimento (TCRT5000 ou similar)
 
-## 📲 Como Usar
+Porta/janela aberta (MC-38)
 
-1. **Configure seu Wi-Fi no código:**
+Buzzer silenciado manualmente
 
-```cpp
-const char* ssid = "SEU_WIFI";
+🕒 Log de eventos com data e hora (via NTP)
+
+🧰 Componentes Utilizados
+ESP32
+
+Sensor de movimento (ex: TCRT5000)
+
+Sensor magnético MC-38 (porta/janela)
+
+Buzzer piezoelétrico
+
+Conexão Wi-Fi
+
+Conta no Telegram com Bot configurado
+
+🖥️ Interface Web
+A interface é acessível pelo IP local do ESP32 e fornece:
+
+Estado atual do alarme
+
+Botões para ativar/desativar o alarme e sensor MC-38
+
+Log de eventos atualizando a cada 1 segundo
+
+📲 Configuração do Telegram
+Crie um bot via BotFather e anote o token.
+
+Envie uma mensagem qualquer ao bot.
+
+Use a URL https://api.telegram.org/bot<SEU_TOKEN>/getUpdates para obter seu chat_id.
+
+Preencha as constantes BOTtoken e CHAT_ID no código com os dados do seu bot.
+
+⚙️ Como Usar
+Conecte os sensores e o buzzer aos pinos definidos no código:
+
+sensorMovimentoPin → Pino 23
+
+sensorMC38Pin → Pino 19
+
+buzzerPin → Pino 22
+
+Configure o nome e a senha do Wi-Fi:
+
+const char* ssid = "SEU_SSID";
 const char* password = "SUA_SENHA";
-```
+Compile e envie o código para o ESP32 usando a Arduino IDE.
 
-2. **Carregue o código no ESP32 usando a IDE Arduino**
+Abra o monitor serial para visualizar o IP atribuído.
 
-3. **Abra o monitor serial (baud rate 19200)** e anote o IP fornecido
+Acesse http://<ip_do_esp32> no navegador.
 
-4. **Acesse o IP pelo navegador** para visualizar a interface web
+📝 Exemplo de Log
+🚶 Movimento detectado em: 15/06/2025 17:34:12
 
----
+🚪 Porta ou janela aberta em: 15/06/2025 17:34:45
 
-## 🌐 Interface Web
+🔇 Alarme foi silenciado em: 15/06/2025 17:35:03
 
-A página mostra:
+📷 Imagens (opcional)
+Você pode adicionar capturas de tela da interface web ou do protótipo montado.
 
-- Estado do alarme (ativado/desativado)
-- Estado do buzzer (tocando ou silencioso)
-- Lista dos últimos eventos de movimento detectado
-- Botão para silenciar o alarme
+🔒 Segurança
+O cliente HTTPS ignora certificados (client.setInsecure()), ideal para protótipos locais.
 
----
+Em produção, recomenda-se usar certificados válidos.
 
-## 📝 Exemplo de Log
+🛠️ Dependências
+Certifique-se de instalar as seguintes bibliotecas na Arduino IDE:
 
-```text
-Movimento detectado em: 23/05/2025 14:32:17
-Movimento detectado em: 23/05/2025 14:30:05
-...
-```
+WiFi
 
----
+WebServer
 
-## 📁 Estrutura do Código
+WiFiClientSecure
 
-- `setup()`: conecta ao Wi-Fi, configura pinos e inicia o servidor web
-- `loop()`: monitora o sensor, aciona o alarme e atualiza a interface
-- `getTimestamp()`: obtém data/hora atual via NTP
-- `addEventLog()`: salva eventos recentes (máximo de 20)
-- `handleRoot()`: renderiza a página HTML principal
-- `handleToggle()`: desativa o alarme/buzzer via interface
+UniversalTelegramBot
 
----
+ArduinoJson
 
-## ⚠️ Observações
+📌 Observações
+O log armazena os últimos 20 eventos.
 
-- O sensor está configurado como **ativo em nível baixo** (`LOW`).
-- O horário é obtido com base no fuso UTC-3 (`configTime(-3 * 3600, 0, ...)`).
-- O botão da interface não desativa o alarme, apenas silencia o buzzer.
+O horário é sincronizado via servidor NTP (pool.ntp.org) com fuso de Brasília (-3 GMT).
 
----
-
-## 📜 Licença
-
-Este projeto é de uso livre para fins educacionais e pode ser adaptado conforme sua necessidade.
+Para testes sem sensores físicos, é possível simular entradas com digitalWrite() ou jumpers.

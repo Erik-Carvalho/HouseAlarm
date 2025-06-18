@@ -86,11 +86,6 @@ A interface é acessível pelo IP local do ESP32 e fornece:
 
 ---
 
-## 📷 Imagens (opcional)
-
-> Você pode adicionar capturas de tela da interface web ou do protótipo montado aqui.
-
----
 
 ## 🔒 Segurança
 

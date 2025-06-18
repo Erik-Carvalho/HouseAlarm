@@ -11,12 +11,15 @@ Este projeto implementa um sistema de alarme residencial usando o ESP32, sensore
   - Estado do sistema
   - Botões para ligar/desligar o alarme
   - Habilitar/desabilitar o sensor MC-38 (janela/porta)
+  - Habilitar/desabilitar o sensor de movimento
+  - Botão para silenciar momentaneamente o Buzzer(Alarme)
   - Visualização do log de eventos em tempo real
 - 🛎️ Buzzer que soa ao detectar invasão
 - 📲 Notificações via Telegram ao detectar:
-  - Movimento (TCRT5000 ou similar)
+  - Movimento (TCRT5000)
   - Porta/janela aberta (MC-38)
   - Buzzer silenciado manualmente
+  - Sensores desativados manualmente
 - 🕒 Log de eventos com data e hora (via NTP)
 
 ---
@@ -37,7 +40,7 @@ Este projeto implementa um sistema de alarme residencial usando o ESP32, sensore
 A interface é acessível pelo IP local do ESP32 e fornece:
 
 - Estado atual do alarme
-- Botões para ativar/desativar o alarme e sensor MC-38
+- Botões para ativar/desativar o alarme, sensor de porta/janela e sensor de movimento
 - Log de eventos atualizando a cada 1 segundo
 
 ---

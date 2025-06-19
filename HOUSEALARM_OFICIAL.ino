@@ -398,7 +398,6 @@ void loop() {
     if (alarmActive && !buzzerTriggered) {
       tone(buzzerPin, 1000);                    // Toca buzzer
       buzzerTriggered = true;                   // Previne múltiplos toques
-      bot.sendMessage(CHAT_ID, "🚨 Movimento detectado!", "");
     }
   }
   lastMovimentoState = movimentoAtual;
@@ -413,7 +412,6 @@ void loop() {
     if (alarmActive && !buzzerTriggered) {
       tone(buzzerPin, 1000);                    // Toca o buzzer
       buzzerTriggered = true;
-      bot.sendMessage(CHAT_ID, "🚨 Porta ou janela foi aberta!", "");  // Telegram
     }
   }
   lastMC38State = mc38Atual;
